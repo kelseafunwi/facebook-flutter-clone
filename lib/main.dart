@@ -16,6 +16,21 @@ class MyApp extends StatelessWidget {
         body: SafeArea(
             child: Row(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Text(
+                          "CForEveryone",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w800
+                          ),
+                        )
+                    ),
+                )
               ],
             )
         )
