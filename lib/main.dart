@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:practice_flutter/features/auth/presentation/screens/create_account_screen.dart';
+import 'firebase_options.dart';
+import 'package:practice_flutter/config/routes/routes.dart';
 
-void main() {
+
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -11,30 +19,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Flutter Demo',
-      home:  Scaffold(
-        body: SafeArea(
-            child: Row(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Text(
-                          "CForEveryone",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 30,
-                            fontWeight: FontWeight.w800
-                          ),
-                        )
-                    ),
-                )
-              ],
-            )
-        )
-      )
+      title: 'Facebook',
+      home:  CreateAccountScreen(),
+      // onGenerateRoute: Routes.onGenerateRoute,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

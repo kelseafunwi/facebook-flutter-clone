@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "593257918219",
+    "project_id": "facebook-clone-43e9f",
+    "storage_bucket": "facebook-clone-43e9f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593257918219:android:9ff4acf4b0348ef0923c0e",
+        "android_client_info": {
+          "package_name": "com.example.practice_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_beJx1odd1YmeG2lZkCf5H8FnbvHBOgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
