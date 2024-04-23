@@ -31,7 +31,9 @@ class PickImageWidget extends StatelessWidget {
             :
           const CircleAvatar(
             radius: 50,
-            backgroundImage: NetworkImage(Constants.maleProfileUser),
+            child: Icon(
+              Icons.supervised_user_circle
+            ),
           ),
           const Positioned(
             bottom: 0,
