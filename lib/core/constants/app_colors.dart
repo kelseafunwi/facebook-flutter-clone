@@ -5,4 +5,5 @@ class AppColors {
   static const darkBlueColor = Colors.blue;
   static const realWhiteColor = Colors.white;
   static const darkWhiteColor = Colors.white;
+  static const blackColor = Colors.black;
 }

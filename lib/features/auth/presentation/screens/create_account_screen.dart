@@ -4,8 +4,10 @@ import "package:flutter/material.dart";
 import "package:practice_flutter/core/constants/app_colors.dart";
 import "package:practice_flutter/core/constants/constants.dart";
 import "package:practice_flutter/core/utils/utils.dart";
+import "package:practice_flutter/features/auth/presentation/widget/birthday_picker.dart";
 import "package:practice_flutter/features/auth/presentation/widget/gender_picker.dart";
 import "package:practice_flutter/widgets/pick_image_widget.dart";
+import "package:practice_flutter/widgets/round_button.dart";
 import "package:practice_flutter/widgets/round_text_field.dart";
 import 'package:practice_flutter/utils/utils.dart';
 
@@ -28,14 +30,25 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
+  DateTime? birthday;
+
   @override
   void initState() {
     super.initState();
-    // initialize the textfields in the init state
+    // initialize the text fields in the init state
     _firstNameController = TextEditingController();
     _lastNameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
   }
 
   @override
@@ -94,15 +107,30 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   height: 20,
                 ),
 
+                BirthdayPicker(
+                  birthday: birthday ?? DateTime.now(),
+                  onPressed: () async {
+                    birthday = await pickSimpleDate(
+                        context: context,
+                        date: birthday
+                    );
+                    setState(() {
+                      birthday = birthday;
+                    });
+                  }
+                ),
+
+                const SizedBox(
+                  height: 20,
+                ),
+
                 GenderPicker(
                   gender: gender,
                   onChanged: (value) {
                     gender = value ?? 'male';
                     // checks if there is something in the value and there will only be something in the value
                     // if the user toggle the value of the radio
-                    setState(() => {
-
-                    });
+                    setState(() => {});
                   }
                 ),
 
@@ -119,12 +147,23 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 ),
 
                 RoundTextField(
-                  controller: _emailController,
+                  controller: _passwordController,
                   hintText: "Password",
                   isPassword: true,
                   textInputAction: TextInputAction.next,
                   validator: validatePassword,
                 ),
+
+                const SizedBox(
+                  height: 20,
+                ),
+
+                RoundButton(
+                    onPressed: () {
+                      print("next button clicked");
+                    },
+                    label: "Next"
+                )
               ],
             ),
           ),

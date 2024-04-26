@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:practice_flutter/features/auth/presentation/screens/create_account_screen.dart';
+import 'package:practice_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'firebase_options.dart';
 import 'package:practice_flutter/config/routes/routes.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Facebook',
-      home:  CreateAccountScreen(),
+      home:  LoginScreen(),
       onGenerateRoute: Routes.onGenerateRoute,
       debugShowCheckedModeBanner: false,
     );
