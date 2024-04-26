@@ -14,6 +14,8 @@ import 'package:practice_flutter/utils/utils.dart';
 final _formKey = GlobalKey<FormState>();
 
 class CreateAccountScreen extends StatefulWidget {
+  static const routeName = '/create-account';
+
   const CreateAccountScreen({super.key});
 
   @override
@@ -21,6 +23,7 @@ class CreateAccountScreen extends StatefulWidget {
 }
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
+
   File? image;
   late String gender = "male";
 
