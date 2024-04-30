@@ -3,7 +3,6 @@ import "dart:io";
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import "package:practice_flutter/core/constants/constants.dart";
 
 class PickImageWidget extends StatelessWidget {
   const PickImageWidget({super.key, required this.image});
@@ -40,7 +39,7 @@ class PickImageWidget extends StatelessWidget {
             right: 0,
             child: FaIcon(
               FontAwesomeIcons.camera,
-              color: Colors.black,
+              color: Colors.blue,
             ),
           )
         ],

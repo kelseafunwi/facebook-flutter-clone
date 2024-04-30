@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_holo_date_picker/date_time_formatter.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 String? validateEmail(String? email) {
-  RegExp emailRegex = RegExp(r'^[\w\.`]+@[\w~]+\.\w{2,3}(\.\w{2,3})?$');
+  RegExp emailRegex = RegExp(r'^[\w`]+@[\w~]+\.\w{2,3}(\.\w{2,3})?$');
   final isEmailValid = emailRegex.hasMatch(email ?? '');
   if (!isEmailValid) {
     return "Please enter a valid email";
@@ -22,7 +22,7 @@ String? validatePassword(String? password) {
 }
 
 String? validateName(String? name) {
-  final nameReg = RegExp(r'[a-zA-Z\s]{1, 50}$');
+  final nameReg = RegExp(r'([A-Za-z]+)');
   if (name == null) {
     return "The name cannot be null";
   } else if (name.isEmpty) {
@@ -45,7 +45,7 @@ final firstDate = DateTime(1900);
 // the last possible date, the user should at least be 7 years old
 final lastDate = DateTime.now().subtract(const Duration(days: 365 * 7));
 
-Future<DateTime?> pickSimpleDate({
+Future<Future<DateTime?>> pickSimpleDate({
   required BuildContext context,
   required DateTime? date,
 }) async {
@@ -59,3 +59,16 @@ Future<DateTime?> pickSimpleDate({
 
   return dateTime;
 }
+
+void showToastMessage({
+  required String e
+}) async {
+  Fluttertoast.showToast(
+    msg: e,
+    backgroundColor: Colors.black54,
+    fontSize: 18,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM
+  );
+}
+

@@ -1,11 +1,13 @@
 import "dart:io";
 
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:practice_flutter/core/constants/app_colors.dart";
 import "package:practice_flutter/core/constants/constants.dart";
 import "package:practice_flutter/core/utils/utils.dart";
 import "package:practice_flutter/features/auth/presentation/widget/birthday_picker.dart";
 import "package:practice_flutter/features/auth/presentation/widget/gender_picker.dart";
+import "package:practice_flutter/features/auth/providers/auth_provider.dart";
 import "package:practice_flutter/widgets/pick_image_widget.dart";
 import "package:practice_flutter/widgets/round_button.dart";
 import "package:practice_flutter/widgets/round_text_field.dart";
@@ -13,19 +15,20 @@ import 'package:practice_flutter/utils/utils.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class CreateAccountScreen extends StatefulWidget {
+class CreateAccountScreen extends ConsumerStatefulWidget {
   static const routeName = '/create-account';
 
   const CreateAccountScreen({super.key});
 
   @override
-  State<CreateAccountScreen> createState() => _CreateAccountScreenState();
+  ConsumerState<CreateAccountScreen> createState() => _CreateAccountScreenState();
 }
 
-class _CreateAccountScreenState extends State<CreateAccountScreen> {
+class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
 
   File? image;
   late String gender = "male";
+  bool isLoading = false;
 
   // create some textEditingControllers which are used to hold access to the different textfields that were created.
   late final TextEditingController _firstNameController;
@@ -33,7 +36,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
-  DateTime? birthday;
+  DateTime birthday = DateTime.now();
 
   @override
   void initState() {
@@ -52,6 +55,38 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     _lastNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  Future<void> createAccount() async {
+    // first thing is to check if all of the inputs for that form where valid.
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      setState(() {
+        isLoading = true;
+      });
+      ref.read(authProvider).createAccount(
+          fullName: '${_firstNameController.text} ${_lastNameController.text}',
+          birthday: birthday,
+          password: _passwordController.text,
+          email: _emailController.text,
+          gender: gender,
+          image: image
+      ).then((credential){
+        if (credential!.user!.emailVerified) {
+          Navigator.pop(context);
+        }
+      })
+      .catchError((_) {
+        setState(() {
+          isLoading = false;
+        });
+      });
+
+
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -111,12 +146,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 ),
 
                 BirthdayPicker(
-                  birthday: birthday ?? DateTime.now(),
+                  birthday: birthday,
                   onPressed: () async {
-                    birthday = await pickSimpleDate(
+                    birthday = (await pickSimpleDate(
                         context: context,
                         date: birthday
-                    );
+                    )) as DateTime;
                     setState(() {
                       birthday = birthday;
                     });
@@ -161,11 +196,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   height: 20,
                 ),
 
-                RoundButton(
-                    onPressed: () {
-                      print("next button clicked");
-                    },
-                    label: "Next"
+                isLoading
+                    ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                    : RoundButton(
+                    onPressed: createAccount,
+                    label: "Create Account"
                 )
               ],
             ),
