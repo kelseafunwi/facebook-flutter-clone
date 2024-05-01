@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:practice_flutter/core/constants/app_colors.dart';
 import 'package:practice_flutter/core/constants/constants.dart';
+import 'package:practice_flutter/features/auth/presentation/screens/create_account_screen.dart';
+import 'package:practice_flutter/features/posts/presentation/screens/create_post_screen.dart';
 import 'package:practice_flutter/features/posts/presentation/widgets/round_profile_tile_widget.dart';
 
 class FeedMakePostWidget extends StatelessWidget {
@@ -11,8 +14,15 @@ class FeedMakePostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: GestureDetector(
+        // here;s what happens if the user clicks on any part of this component.
         onTap: () {
-
+          try {
+            Navigator.of(context).pushNamed(CreatePostScreen.routeName);
+          } catch(error) {
+            if (kDebugMode) {
+              print(error);
+            }
+          }
         },
         child: Container(
           color: Colors.white,
@@ -24,6 +34,7 @@ class FeedMakePostWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
 
+                // male profile picture to be used.
                 const RoundProfileTile(url: Constants.maleProfileUser),
 
                 _buildPostTextField(),
@@ -52,9 +63,9 @@ class FeedMakePostWidget extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: AppColors.darkGreyColor),
+            border: Border.all(color: AppColors.blackColor),
           ),
-          child: ,
+          child: const Text("What's on your mind"),
         )
     );
   }

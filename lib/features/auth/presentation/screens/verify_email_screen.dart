@@ -1,17 +1,24 @@
 import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:practice_flutter/core/constants/constants.dart";
 import "package:practice_flutter/core/screens/home_screen.dart";
 import "package:practice_flutter/features/auth/providers/auth_provider.dart";
+import "package:practice_flutter/features/auth/providers/get_user_info_provider.dart";
 import "package:practice_flutter/utils/utils.dart";
 import "package:practice_flutter/widgets/round_button.dart";
 
+import "../../models/user.dart";
+
 class VerifyEmailScreen extends ConsumerWidget {
-  const VerifyEmailScreen({super.key});
+  final User user;
+
+  const VerifyEmailScreen({super.key, required this.user});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -19,6 +26,39 @@ class VerifyEmailScreen extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 10,
+                ),
+                child: Text(
+                  // user.email
+                  "${user.email}",
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+            ),
+
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 10,
+                ),
+                child: Text(
+                  // user.email
+                  "Verify your email to continue",
+                  style: TextStyle(
+                      fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
+
             RoundButton(
               onPressed: () async{
                 await ref.read(authProvider).verifyEmail()

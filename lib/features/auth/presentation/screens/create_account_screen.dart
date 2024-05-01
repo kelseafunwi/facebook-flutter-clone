@@ -74,6 +74,8 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
       ).then((credential){
         if (credential!.user!.emailVerified) {
           Navigator.pop(context);
+        } else {
+          Navigator.of(context).pop();
         }
       })
       .catchError((_) {

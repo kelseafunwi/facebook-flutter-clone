@@ -42,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         appBar: AppBar(
           backgroundColor: AppColors.realWhiteColor,
           title: _buildFacebookText(),
+          elevation: 0,
           actions: [
             _buildMessengerWidget(),
             _buildSearchWidget(),
