@@ -1,15 +1,11 @@
 import "package:firebase_auth/firebase_auth.dart";
-import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:practice_flutter/core/constants/constants.dart";
 import "package:practice_flutter/core/screens/home_screen.dart";
 import "package:practice_flutter/features/auth/providers/auth_provider.dart";
-import "package:practice_flutter/features/auth/providers/get_user_info_provider.dart";
 import "package:practice_flutter/utils/utils.dart";
 import "package:practice_flutter/widgets/round_button.dart";
-
-import "../../models/user.dart";
 
 class VerifyEmailScreen extends ConsumerWidget {
   final User user;

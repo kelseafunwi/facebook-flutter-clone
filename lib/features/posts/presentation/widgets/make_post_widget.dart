@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:practice_flutter/core/constants/app_colors.dart';
 import 'package:practice_flutter/core/constants/constants.dart';
-import 'package:practice_flutter/features/auth/presentation/screens/create_account_screen.dart';
 import 'package:practice_flutter/features/posts/presentation/screens/create_post_screen.dart';
 import 'package:practice_flutter/features/posts/presentation/widgets/round_profile_tile_widget.dart';
 

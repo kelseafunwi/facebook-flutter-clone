@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:practice_flutter/core/constants/app_colors.dart';
-import 'package:practice_flutter/features/auth/providers/auth_provider.dart';
 import 'package:practice_flutter/widgets/round_icon_button.dart';
 import 'package:practice_flutter/core/constants/constants.dart';
 

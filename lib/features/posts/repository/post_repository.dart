@@ -34,6 +34,7 @@ class PostRepository {
       // storing the post file to the storage
       final fileUuid = const Uuid().v1();
       // this is going to be the exact name of the file inside of that folder.
+      // where postType means we will have 2 folders for both the video and image postType.
       final path = _storage.ref(postType).child(fileUuid);
       // this function is going to put the file on line
       final taskSnapshot = await path.putFile(file);
@@ -57,6 +58,7 @@ class PostRepository {
           .doc(postId)
           .set(post.toMap());
       return null;
+      // the make post function will return a string incase of error and null if there is no error.
     } catch (error) {
       return error.toString();
     }
