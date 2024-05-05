@@ -8,7 +8,7 @@ import 'package:practice_flutter/core/screens/home_screen.dart';
 import 'package:practice_flutter/core/screens/loader.dart';
 import 'package:practice_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'package:practice_flutter/features/auth/presentation/screens/verify_email_screen.dart';
-import 'package:practice_flutter/features/random/presentation/widget_of_the_day.dart';
+import 'package:practice_flutter/features/random/presentation/screens/widget_of_the_day.dart';
 import 'firebase_options.dart';
 import 'package:practice_flutter/config/routes/routes.dart';
 
