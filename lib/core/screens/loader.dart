@@ -5,6 +5,16 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CircularProgressIndicator();
+    return const Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: 20,
+        horizontal: 5
+      ),
+      child: Center(
+        child: CircularProgressIndicator(
+          strokeWidth: 6,
+        ),
+      ),
+    );
   }
 }

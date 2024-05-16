@@ -31,9 +31,15 @@ class PostInfoTile extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
 
-              CircleAvatar(
+              if (user.profilePicUrl.isNotEmpty)
+                CircleAvatar(
                 backgroundImage: NetworkImage(user.profilePicUrl),
-              ),
+                )
+              else
+                const CircleAvatar(
+                  backgroundColor: Colors.grey,
+                ),
+
 
               const SizedBox(width: 10),
 

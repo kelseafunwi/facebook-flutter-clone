@@ -8,14 +8,26 @@ class RoundProfileTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
+    if (url.isNotEmpty) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8.0,
+        ),
+        child: CircleAvatar(
+          radius: 20,
+          backgroundColor: AppColors.grey,
+          backgroundImage: NetworkImage(url),
+        ),
+      );
+    }
+
+    return const Padding(
+      padding: EdgeInsets.symmetric(
         horizontal: 8.0,
       ),
       child: CircleAvatar(
         radius: 20,
         backgroundColor: AppColors.grey,
-        backgroundImage: NetworkImage(url),
       ),
     );
   }

@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:practice_flutter/features/posts/presentation/widgets/post_video_view.dart';
-import 'package:practice_flutter/features/posts/presentation/widgets/video_view.dart';
 
 class PostImageVideoView extends StatelessWidget {
   const PostImageVideoView({super.key, required this.fileType, required this.fileUrl});

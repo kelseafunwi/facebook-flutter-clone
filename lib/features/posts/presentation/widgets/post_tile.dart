@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:practice_flutter/core/constants/app_colors.dart';
 import 'package:practice_flutter/features/posts/models/post.dart';
+import 'package:practice_flutter/features/posts/presentation/screens/comments_screen.dart';
 import 'package:practice_flutter/features/posts/presentation/widgets/icon_text_button.dart';
 import 'package:practice_flutter/features/posts/presentation/widgets/post_image_video_view.dart';
 import 'package:practice_flutter/features/posts/presentation/widgets/round_like_button.dart';
@@ -26,12 +27,13 @@ class PostTile extends StatelessWidget {
 
           PostInfoTile(datePublished: post.datePublished, userId: post.posterId),
 
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: post.content.isNotEmpty ? Text(post.content) : const Text("No Post Content"),
-          ),
+          if (post.content.isNotEmpty)
+            Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            child: Text(post.content),
+            ),
 
-          PostImageVideoView(fileType: post.postType, fileUrl: post.fileUrl),
+          if (post.fileUrl.isNotEmpty) PostImageVideoView(fileType: post.postType, fileUrl: post.fileUrl),
 
           Column(
             children: [
@@ -101,7 +103,13 @@ class PostButtons extends ConsumerWidget {
             ref.read(postProvider).likeOrDislikePost(postId: post.postId, likes: post.likes);
           },
         ),
-        const IconTextButton(icon: FontAwesomeIcons.solidMessage, label: "Comment"),
+        IconTextButton(
+          icon: FontAwesomeIcons.solidMessage,
+          label: "Comment",
+          onPressed: () {
+            Navigator.of(context).pushNamed(CommentsScreen.routeName, arguments: post.postId);
+          }
+        ),
         const IconTextButton(icon: FontAwesomeIcons.share, label: "Share"),
       ],
     );

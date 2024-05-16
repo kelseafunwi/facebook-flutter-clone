@@ -13,7 +13,7 @@ final getAllVideoProvider = StreamProvider.autoDispose<Iterable<Post>>((ref) {
   final sub = FirebaseFirestore.instance
       .collection(FirebaseCollectionNames.posts)
       .where(FirebaseFieldNames.postType, isEqualTo: 'video')
-      .orderBy(FirebaseFieldNames.createdAt, descending: true)
+      .orderBy(FirebaseFieldNames.datePublished, descending: true)
       .snapshots()
       .listen((snapshot) {
         final posts = snapshot.docs.map(
