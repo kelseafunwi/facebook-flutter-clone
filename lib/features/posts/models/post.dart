@@ -8,28 +8,26 @@ class Post {
   final String content;
   final String postType;
   final String fileUrl;
-  final DateTime createdAt;
+  final DateTime datePublished;
   final List<String> likes;
 
-  // the developer will use this as the model in order to create a new element
   const Post({
     required this.postId,
     required this.posterId,
     required this.content,
     required this.postType,
     required this.fileUrl,
-    required this.createdAt,
+    required this.datePublished,
     required this.likes,
   });
 
-  // when the user wants to convert a post to a map this is the function that we are going to use
   Map<String, dynamic> toMap() => {
     FirebaseFieldNames.postId: postId,
     FirebaseFieldNames.posterId: posterId,
     FirebaseFieldNames.content: content,
     FirebaseFieldNames.postType: postType,
     FirebaseFieldNames.fileUrl: fileUrl,
-    FirebaseFieldNames.datePublished: createdAt.millisecondsSinceEpoch,
+    FirebaseFieldNames.datePublished: datePublished.millisecondsSinceEpoch,
     FirebaseFieldNames.likes: likes,
   };
 
@@ -40,7 +38,7 @@ class Post {
       content: map[FirebaseFieldNames.content] ?? '',
       postType: map[FirebaseFieldNames.postType] ?? '',
       fileUrl: map[FirebaseFieldNames.fileUrl] ?? '',
-      createdAt: DateTime.fromMicrosecondsSinceEpoch(map[FirebaseFieldNames.datePublished] ?? 0),
+      datePublished: DateTime.fromMicrosecondsSinceEpoch(map[FirebaseFieldNames.datePublished] ?? 0),
       likes: List<String>.from(map[FirebaseFieldNames.likes] ?? []) ,
     );
   }

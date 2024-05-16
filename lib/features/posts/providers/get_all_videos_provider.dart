@@ -16,11 +16,10 @@ final getAllVideoProvider = StreamProvider.autoDispose<Iterable<Post>>((ref) {
       .orderBy(FirebaseFieldNames.createdAt, descending: true)
       .snapshots()
       .listen((snapshot) {
-    final posts = snapshot.docs.map(
-            (postData) => Post.fromMap(postData.data())
-    );
-
-    controller.sink.add(posts);
+        final posts = snapshot.docs.map(
+          (postData) => Post.fromMap(postData.data())
+        );
+        controller.sink.add(posts);
   });
 
   ref.onDispose(() {

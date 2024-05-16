@@ -48,7 +48,7 @@ class PostRepository {
           content: content,
           postType: postType,
           fileUrl: downloadUrl,
-          createdAt: now,
+          datePublished: now,
           likes: const [],
       );
 
@@ -64,7 +64,6 @@ class PostRepository {
     }
   }
 
-  // like or dislike a post
   Future<String?> likeOrDislikePost({
     required String postId,
     required List<String> likes,

@@ -21,7 +21,7 @@ class _VideoViewState extends State<VideoView> {
   void initState() {
     _videoController = VideoPlayerController.file(widget.video)..initialize().then((value) {
       setState(() {
-
+        // we are going to trigger re-rendiring of the state when the video has loaded.
       });
     });
     super.initState();
@@ -36,7 +36,7 @@ class _VideoViewState extends State<VideoView> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-        aspectRatio: _videoController.value.aspectRatio,
+      aspectRatio: _videoController.value.aspectRatio,
       child: Stack(
         children: [
           VideoPlayer(_videoController),

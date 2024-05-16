@@ -4,6 +4,7 @@ import 'package:practice_flutter/core/constants/app_colors.dart';
 import 'package:practice_flutter/core/constants/constants.dart';
 import 'package:practice_flutter/core/utils/utils.dart';
 import 'package:practice_flutter/features/posts/presentation/widgets/image_video_view.dart';
+import 'package:practice_flutter/features/posts/presentation/widgets/pick_file_widget.dart';
 import 'dart:io';
 import 'package:practice_flutter/features/posts/presentation/widgets/profile_info.dart';
 import 'package:practice_flutter/features/posts/providers/post_provider.dart';
@@ -44,15 +45,16 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
 
     Future makePost() async {
       isLoading = true;
+      setState(() {});
       ref.read(postProvider).makePost(
-          content: _postController.text,
-          file: file!,
-          postType: fileType
+        content: _postController.text,
+        file: file!,
+        postType: fileType,
       ).then((value) {
-        setState(() {
-          isLoading = false;
-        });
-        // taking off the CreatePost screen after creating the post and storing.
+
+        isLoading = false;
+        setState(() {});
+
         Navigator.of(context).pop();
       }).catchError((_)  {
         showToastMessage(e: "Error occurred");
@@ -61,6 +63,8 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
         actions: [
           TextButton(
             onPressed: makePost,
@@ -70,6 +74,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
           ),
         ],
       ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: Constants.defaultPadding,
@@ -98,10 +103,12 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
               ),
 
               file != null ?
+
                 ImageVideoView(
                     file: file!,
                     fileType: fileType
                 ):
+
                 PickFileWidget(
                     pickImage: () async {
                       file = await pickImage();
@@ -113,9 +120,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
                     pickVideo: () async {
                       file = await pickVideo();
                       fileType = 'video';
-                      setState(() {
-
-                      });
+                      setState(() {});
                     }
                 ),
 
@@ -138,33 +143,6 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
             ],
           ),
         ),
-      )
-    );
-  }
-}
-
-class PickFileWidget extends StatelessWidget {
-  const PickFileWidget({super.key, required this.pickImage, required this.pickVideo});
-
-  final VoidCallback pickImage;
-  final VoidCallback pickVideo;
-
-  @override
-  Widget build(BuildContext context) {
-    return (
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          TextButton(onPressed: pickImage, child: const Text("Pick Image")),
-
-          const Divider(),
-
-          TextButton(
-              onPressed: pickVideo,
-              child: const Text("Pick Video")
-          ),
-
-        ],
       )
     );
   }

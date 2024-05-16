@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,7 +14,7 @@ class TileWidget extends StatelessWidget {
     return ListTile(
       onTap: () {
         if (kDebugMode) {
-          print("Itme clicked");
+          print("Item clicked");
         }
         Fluttertoast.showToast(msg: "$title: $subtitle ");
       },

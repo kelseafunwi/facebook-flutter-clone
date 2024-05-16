@@ -7,9 +7,9 @@ class ProfileInfoWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     return FutureBuilder(
         future: ref.read(authProvider).getUserInfo(),
-
         builder: (context, snapshot) {
 
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -52,7 +52,7 @@ class ProfileInfoWidget extends ConsumerWidget {
           }
 
           return Text(
-            "Error ${snapshot.error.toString()}",
+            snapshot.error.toString(),
             style: const TextStyle(
               color: Colors.black,
               fontSize: 30,

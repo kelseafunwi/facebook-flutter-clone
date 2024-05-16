@@ -23,6 +23,7 @@ Future<File?> pickVideo() async {
   final picker = ImagePicker();
   final file = await picker.pickVideo(
     source: ImageSource.gallery,
+    // we pass in the max duration that can be picked up.
     maxDuration: const Duration(minutes: 5),
   );
 

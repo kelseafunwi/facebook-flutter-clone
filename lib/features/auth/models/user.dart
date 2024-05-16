@@ -19,7 +19,7 @@ import 'package:practice_flutter/core/constants/firebase_field_names.dart';
     required this.gender,
     required this.email,
     required this.password,
-    required this.profilePicUrl,
+    this.profilePicUrl = '',
     required this.uid,
     required this.friends,
     required this.sentRequests,
@@ -31,7 +31,7 @@ import 'package:practice_flutter/core/constants/firebase_field_names.dart';
   Map<String, dynamic> toMap() {
     return <String, dynamic> {
       FirebaseFieldNames.fullName: fullName,
-      FirebaseFieldNames.birthday: birthday,
+      FirebaseFieldNames.birthday: birthday.millisecondsSinceEpoch,
       FirebaseFieldNames.gender: gender,
       FirebaseFieldNames.email: email,
       FirebaseFieldNames.password: password,
@@ -48,7 +48,7 @@ import 'package:practice_flutter/core/constants/firebase_field_names.dart';
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       fullName: map[FirebaseFieldNames.fullName] as String,
-      birthday: DateTime.fromMicrosecondsSinceEpoch(map[FirebaseFieldNames.birthday] as int),
+      birthday: DateTime.fromMillisecondsSinceEpoch(map[FirebaseFieldNames.birthday] as int),
       gender: map[FirebaseFieldNames.gender] as String,
       email: map[FirebaseFieldNames.email] as String,
       password: map[FirebaseFieldNames.password] as String,

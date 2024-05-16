@@ -1,45 +1,23 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:practice_flutter/core/screens/error_screen.dart';
 import 'package:practice_flutter/core/screens/loader.dart';
-import 'package:practice_flutter/features/posts/presentation/widgets/make_post_widget.dart';
 import 'package:practice_flutter/features/posts/presentation/widgets/post_tile.dart';
-import 'package:practice_flutter/features/posts/providers/get_all_post_provider.dart';
+import 'package:practice_flutter/features/posts/providers/get_all_videos_provider.dart';
 
-class PostScreen extends StatelessWidget {
-  const PostScreen({super.key});
+class VideoScreen extends ConsumerWidget {
+  const VideoScreen({super.key});
 
-  static const routeName = '/post/create';
-
-  @override
-  Widget build(BuildContext context) {
-    return const CustomScrollView(
-      slivers: [
-        FeedMakePostWidget(),
-
-        PostList(),
-      ],
-    );
-  }
-}
-
-class PostList extends  ConsumerWidget {
-  const PostList({super.key});
+  static const routeName = '/post/videos';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    final posts = ref.watch(getAllPostProvider);
+    final posts = ref.watch(getAllVideoProvider);
 
     return posts.when(
       data: (postsData) {
-        if (kDebugMode) {
-          print("Post Data $postsData");
-        }
-
-        return SliverList.separated(
+        return ListView.separated(
           itemCount: postsData.length,
           itemBuilder: (context, int index) {
 
@@ -47,9 +25,9 @@ class PostList extends  ConsumerWidget {
 
             return Row(
               children: [
-            
+
                 Expanded(child: PostTile(post: post)),
-            
+
               ],
             );
           },
@@ -62,14 +40,10 @@ class PostList extends  ConsumerWidget {
         );
       },
       error: (error,stackTrace) {
-        return SliverToBoxAdapter(
-          child: ErrorScreen(error: error.toString()),
-        );
+        return ErrorScreen(error: error.toString());
       },
       loading: () {
-        return const SliverToBoxAdapter(
-          child: Loader(),
-        );
+        return const Loader();
       }
     );
   }

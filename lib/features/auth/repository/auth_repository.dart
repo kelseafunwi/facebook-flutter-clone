@@ -23,7 +23,6 @@ class AuthRepository {
 
       return credential;
     } catch (e) {
-      showToastMessage(e: e.toString());
       return null;
     }
   }
@@ -54,29 +53,44 @@ class AuthRepository {
       // getting the specific id address where this user is going to put their app
       final path = _storage.ref(StorageFolderNames.profilePics).child(_auth.currentUser!.uid);
 
-      if (image == null) {
-        return null;
+      final String downloadUrl;
+      UserModel userModel;
+
+      if (image != null) {
+        final taskSnapshot = await path.putFile(image);
+        downloadUrl = await taskSnapshot.ref.getDownloadURL();
+
+
+        // creating a new user model from the information we received.
+         userModel = UserModel(
+            birthday: birthday,
+            fullName: fullName,
+            gender: gender,
+            email: email,
+            password: password,
+            profilePicUrl: downloadUrl,
+            uid: _auth.currentUser!.uid,
+            friends: const [],
+            sentRequests: const [],
+            receivedRequests: const []
+        );
+      } else {
+        userModel = UserModel(
+            birthday: birthday,
+            fullName: fullName,
+            gender: gender,
+            email: email,
+            password: password,
+            uid: _auth.currentUser!.uid,
+            friends: const [],
+            sentRequests: const [],
+            receivedRequests: const []
+        );
       }
-
-      final taskSnapshot = await path.putFile(image);
-      final downloadUrl = await taskSnapshot.ref.getDownloadURL();
-
-      // creating a new user model from the information we received.
-      UserModel userModel = UserModel(
-        birthday: birthday,
-        fullName: fullName,
-        gender: gender,
-        email: email,
-        password: password,
-        profilePicUrl: downloadUrl,
-        uid: _auth.currentUser!.uid,
-        friends: const [],
-        sentRequests: const [],
-        receivedRequests: const []
-      );
 
       // we can use the set method on particular doc.
       await _firestore.collection(FirebaseCollectionNames.users).doc(_auth.currentUser!.uid).set(userModel.toMap());
+
       return credential;
     } catch (error) {
       showToastMessage(e: error.toString());

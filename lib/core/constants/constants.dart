@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practice_flutter/features/posts/presentation/screens/post_screen.dart';
+import 'package:practice_flutter/features/posts/presentation/screens/video_screen.dart';
 
 class Constants {
 
@@ -58,9 +59,7 @@ class Constants {
       child: Text("view 2")
     ),
 
-    const Center(
-      child: Text("view 3")
-    ),
+    const VideoScreen(),
 
     const Center(
       child: Text("view 4")

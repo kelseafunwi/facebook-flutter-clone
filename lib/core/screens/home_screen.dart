@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:practice_flutter/core/constants/app_colors.dart';
+import 'package:practice_flutter/features/auth/providers/auth_provider.dart';
 import 'package:practice_flutter/widgets/round_icon_button.dart';
 import 'package:practice_flutter/core/constants/constants.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   static const routeName = '/home';
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-// Inorder to use the TabController we have to use the Mixin with TickerProviderStateMixin
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStateMixin {
 
   late final TabController _tabController;
 
@@ -43,7 +44,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           elevation: 0,
           actions: [
             _buildMessengerWidget(),
-            _buildSearchWidget(),
+
+            GestureDetector(
+              onTap: () async {
+                await ref.read(authProvider).signOut();
+              },
+              child: _buildSearchWidget()
+            ),
           ],
           bottom: TabBar(
             tabs: Constants.getHomeScreenTabs(_tabController.index),
@@ -72,5 +79,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Widget _buildSearchWidget() => const  RoundIconButton(icon: FontAwesomeIcons.magnifyingGlass);
 
-  Widget _buildMessengerWidget() => const  RoundIconButton(icon: FontAwesomeIcons.facebookMessenger);
+  Widget _buildMessengerWidget() => const  RoundIconButton(
+      icon: FontAwesomeIcons.facebookMessenger
+  );
 }

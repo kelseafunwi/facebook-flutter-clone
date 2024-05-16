@@ -1,5 +1,6 @@
 import "dart:io";
 
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:practice_flutter/core/constants/app_colors.dart";
@@ -41,7 +42,6 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
   @override
   void initState() {
     super.initState();
-    // initialize the text fields in the init state
     _firstNameController = TextEditingController();
     _lastNameController = TextEditingController();
     _emailController = TextEditingController();
@@ -57,45 +57,14 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
     _passwordController.dispose();
   }
 
-  Future<void> createAccount() async {
-    // first thing is to check if all of the inputs for that form where valid.
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      setState(() {
-        isLoading = true;
-      });
-      ref.read(authProvider).createAccount(
-          fullName: '${_firstNameController.text} ${_lastNameController.text}',
-          birthday: birthday,
-          password: _passwordController.text,
-          email: _emailController.text,
-          gender: gender,
-          image: image
-      ).then((credential){
-        if (credential!.user!.emailVerified) {
-          Navigator.pop(context);
-        } else {
-          Navigator.of(context).pop();
-        }
-      })
-      .catchError((_) {
-        setState(() {
-          isLoading = false;
-        });
-      });
-
-
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.realWhiteColor,
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: AppColors.realWhiteColor,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: Constants.defaultPadding,
@@ -120,12 +89,12 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                 Row(
                   children: [
                     Expanded(
-                        child: RoundTextField(
-                          controller: _firstNameController,
-                          hintText: "First Name",
-                          textInputAction: TextInputAction.next,
-                          validator: validateName,
-                        )
+                      child: RoundTextField(
+                        controller: _firstNameController,
+                        hintText: "First Name",
+                        textInputAction: TextInputAction.next,
+                        validator: validateName,
+                      )
                     ),
 
                     const SizedBox(
@@ -199,12 +168,11 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                 ),
 
                 isLoading
-                    ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                    : RoundButton(
-                    onPressed: createAccount,
-                    label: "Create Account"
+                  ? const Center(
+                    child: CircularProgressIndicator(),
+                  ) : RoundButton(
+                  onPressed: createAccount,
+                  label: "Create Account"
                 )
               ],
             ),
@@ -212,5 +180,40 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
         ),
       ),
     );
+  }
+
+
+  Future<void> createAccount() async {
+    // first thing is to check if all of the inputs for that form where valid.
+    if (_formKey.currentState!.validate()) {
+      // after making sure that it is validated,we save the current state of the form.
+      _formKey.currentState!.save();
+      isLoading = true;
+      setState(() {});
+      ref.read(authProvider).createAccount(
+          fullName: '${_firstNameController.text} ${_lastNameController.text}',
+          birthday: birthday,
+          password: _passwordController.text,
+          email: _emailController.text,
+          gender: gender,
+          image: image
+      ).then((credential){
+        Navigator.of(context).pop();
+        showToastMessage(e: "Done creating the account");
+      })
+      .catchError((error) {
+        showToastMessage(e: "Error occurred with the create Account method.");
+        if (kDebugMode) {
+          print(error);
+        }
+        isLoading = false;
+        setState(() {});
+      });
+
+
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 }

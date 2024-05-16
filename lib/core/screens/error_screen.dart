@@ -11,7 +11,6 @@ class ErrorScreen extends StatelessWidget {
       appBar: AppBar(),
       body: const Column(
         children: [
-
           Text("Error Screen"),
         ],
       ),
