@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:practice_flutter/features/posts/presentation/widgets/comment_list.dart';
+import 'package:practice_flutter/features/posts/presentation/widgets/comment_textfield.dart';
+import 'package:practice_flutter/features/posts/presentation/widgets/comment_tile.dart';
 
 class CommentsScreen extends StatelessWidget {
   final String postId;
@@ -13,12 +16,12 @@ class CommentsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Comment Section"),
       ),
-      body: const Column(
+      body: Column(
         children: [
 
-          // comment place
+          CommentList(postId: postId),
 
-          // comment text field
+          CommentTextField(postId: postId),
         ],
       ),
     );
