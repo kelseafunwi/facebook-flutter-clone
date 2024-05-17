@@ -33,19 +33,14 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       title: 'Facebook',
       theme: AppTheme.appTheme(),
-      // i can pass the FirebaseAuth.instance.authStatechanged function to the stream and receive the snapshot and perform some changes in my application
       home: StreamBuilder(
-        // continuously receiving information from the Firebase authStateChange method.
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
-            // puts the loading icon if the application is still waiting to be connected to firebase.
            if (snapshot.connectionState == ConnectionState.waiting){
              return const Loader();
            }
 
-           // if some data was returned from firebase
            if (snapshot.hasData) {
-             // since we use FirebaseAu
              final user = snapshot.data;
              if (user!.emailVerified) {
                return const HomeScreen();

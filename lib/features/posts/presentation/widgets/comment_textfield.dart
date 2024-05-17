@@ -22,7 +22,9 @@ class _CommentTextFieldState extends ConsumerState<CommentTextField> {
     );
   }
 
-
+  Future<void> makeComment() async {
+    
+  }
 
   @override
   void initState() {

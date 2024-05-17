@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -107,7 +108,13 @@ class PostButtons extends ConsumerWidget {
           icon: FontAwesomeIcons.solidMessage,
           label: "Comment",
           onPressed: () {
-            Navigator.of(context).pushNamed(CommentsScreen.routeName, arguments: post.postId);
+            try {
+              Navigator.of(context).pushNamed(CommentsScreen.routeName, arguments: post.postId);
+            } catch (error) {
+              if(kDebugMode) {
+                print("Error ${error.toString()}");
+              }
+            }
           }
         ),
         const IconTextButton(icon: FontAwesomeIcons.share, label: "Share"),
