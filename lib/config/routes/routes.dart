@@ -4,6 +4,7 @@ import 'package:practice_flutter/core/screens/first_screen.dart';
 import 'package:practice_flutter/core/screens/home_screen.dart';
 import 'package:practice_flutter/features/auth/presentation/screens/create_account_screen.dart';
 import 'package:practice_flutter/features/auth/presentation/screens/forgot_password_screen.dart';
+import 'package:practice_flutter/features/friends/presentation/screens/friends_screen.dart';
 import 'package:practice_flutter/features/posts/presentation/screens/comments_screen.dart';
 import 'package:practice_flutter/features/posts/presentation/screens/create_post_screen.dart';
 import 'package:practice_flutter/features/posts/presentation/screens/post_screen.dart';
@@ -46,6 +47,11 @@ class Routes {
       case FirstScreen.routeName:
         return _cupertinoRoute(
           const FirstScreen(),
+        );
+
+      case FriendsScreen.routeName:
+        return _cupertinoRoute(
+          const FriendsScreen(),
         );
 
       default:

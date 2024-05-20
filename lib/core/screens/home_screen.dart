@@ -47,7 +47,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
 
             GestureDetector(
               onTap: () async {
-                await ref.read(authProvider).signOut();
+                _showDialog();
               },
               child: _buildSearchWidget()
             ),
@@ -82,4 +82,34 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
   Widget _buildMessengerWidget() => const  RoundIconButton(
       icon: FontAwesomeIcons.facebookMessenger
   );
+
+  void _showDialog() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          elevation: 20,
+          backgroundColor: Colors.grey,
+          title: const Text('Warning...'),
+          content: const Text("Are you sure you want to logout of the account ?."),
+          icon: const Icon(Icons.warning),
+          actions: [
+            MaterialButton(
+              onPressed: () async{
+                await ref.read(authProvider).signOut();
+              },
+              child: const Text("Yes"),
+            ),
+
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("No"),
+            )
+          ],
+        );
+      }
+    );
+  }
 }
