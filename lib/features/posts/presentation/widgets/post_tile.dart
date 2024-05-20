@@ -93,32 +93,37 @@ class PostButtons extends ConsumerWidget {
 
     final isLiked = post.likes.contains(FirebaseAuth.instance.currentUser!.uid);
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        IconTextButton(
-          icon: isLiked ? FontAwesomeIcons.solidThumbsUp :  FontAwesomeIcons.thumbsUp,
-          color: isLiked ? AppColors.blueColor: AppColors.blackColor,
-          label: "Like",
-          onPressed: () {
-            ref.read(postProvider).likeOrDislikePost(postId: post.postId, likes: post.likes);
-          },
-        ),
-        IconTextButton(
-          icon: FontAwesomeIcons.solidMessage,
-          label: "Comment",
-          onPressed: () {
-            try {
-              Navigator.of(context).pushNamed(CommentsScreen.routeName, arguments: post.postId);
-            } catch (error) {
-              if(kDebugMode) {
-                print("Error ${error.toString()}");
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: 14,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          IconTextButton(
+            icon: isLiked ? FontAwesomeIcons.solidThumbsUp :  FontAwesomeIcons.thumbsUp,
+            color: isLiked ? AppColors.blueColor: AppColors.blackColor,
+            label: "Like",
+            onPressed: () {
+              ref.read(postProvider).likeOrDislikePost(postId: post.postId, likes: post.likes);
+            },
+          ),
+          IconTextButton(
+            icon: FontAwesomeIcons.solidMessage,
+            label: "Comment",
+            onPressed: () {
+              try {
+                Navigator.of(context).pushNamed(CommentsScreen.routeName, arguments: post.postId);
+              } catch (error) {
+                if(kDebugMode) {
+                  print("Error ${error.toString()}");
+                }
               }
             }
-          }
-        ),
-        const IconTextButton(icon: FontAwesomeIcons.share, label: "Share"),
-      ],
+          ),
+          const IconTextButton(icon: FontAwesomeIcons.share, label: "Share"),
+        ],
+      ),
     );
   }
 }

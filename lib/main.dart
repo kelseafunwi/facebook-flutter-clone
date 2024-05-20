@@ -8,6 +8,7 @@ import 'package:practice_flutter/core/screens/home_screen.dart';
 import 'package:practice_flutter/core/screens/loader.dart';
 import 'package:practice_flutter/features/auth/presentation/screens/login_screen.dart';
 import 'package:practice_flutter/features/auth/presentation/screens/verify_email_screen.dart';
+import 'package:practice_flutter/widgets/splash_screen.dart';
 import 'firebase_options.dart';
 import 'package:practice_flutter/config/routes/routes.dart';
 
@@ -33,25 +34,7 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       title: 'Facebook',
       theme: AppTheme.appTheme(),
-      home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-           if (snapshot.connectionState == ConnectionState.waiting){
-             return const Loader();
-           }
-
-           if (snapshot.hasData) {
-             final user = snapshot.data;
-             if (user!.emailVerified) {
-               return const HomeScreen();
-             } else {
-               return VerifyEmailScreen(user: user);
-             }
-           }
-
-           return const LoginScreen();
-          }
-      ),
+      home: const SplashScreen(),
       onGenerateRoute: Routes.onGenerateRoute,
       debugShowCheckedModeBanner: false,
     );

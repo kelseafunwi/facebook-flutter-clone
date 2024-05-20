@@ -10,7 +10,6 @@ class RoundTextField extends StatelessWidget {
   final bool isPassword;
   final TextInputType? keyboardType;
   final TextInputAction textInputAction;
-  // validator is a function that will optionally take in a string and optionally return another string.
   final String? Function(String?)? validator;
 
   @override

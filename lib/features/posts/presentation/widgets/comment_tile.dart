@@ -48,6 +48,7 @@ class CommentHeader extends ConsumerWidget {
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             RoundProfileTile(url: userData.profilePicUrl),
 
             Flexible(
@@ -69,7 +70,7 @@ class CommentHeader extends ConsumerWidget {
                     ),
 
                     Text(
-                      comment.text,
+                      "${comment.createdAt.toString()} ${comment.text}",
                     ),
                   ],
                 ),
