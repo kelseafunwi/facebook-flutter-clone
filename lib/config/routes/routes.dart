@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:practice_flutter/core/screens/error_screen.dart';
 import 'package:practice_flutter/core/screens/first_screen.dart';
 import 'package:practice_flutter/core/screens/home_screen.dart';
+import 'package:practice_flutter/core/screens/profile_screen.dart';
 import 'package:practice_flutter/features/auth/presentation/screens/create_account_screen.dart';
 import 'package:practice_flutter/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:practice_flutter/features/friends/presentation/screens/friends_screen.dart';
@@ -52,6 +53,14 @@ class Routes {
       case FriendsScreen.routeName:
         return _cupertinoRoute(
           const FriendsScreen(),
+        );
+
+      case ProfileScreen.routeName:
+        final userId = settings.arguments as String;
+        return _cupertinoRoute(
+          ProfileScreen(
+            userId: userId,
+          ),
         );
 
       default:

@@ -206,8 +206,9 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
         if (kDebugMode) {
           print(error);
         }
-        isLoading = false;
-        setState(() {});
+        setState(() {
+          isLoading = false;
+        });
       });
 
 

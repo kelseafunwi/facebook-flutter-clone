@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:practice_flutter/core/screens/profile_screen.dart';
 import 'package:practice_flutter/features/friends/presentation/screens/friends_screen.dart';
 import 'package:practice_flutter/features/posts/presentation/screens/post_screen.dart';
 import 'package:practice_flutter/features/posts/presentation/screens/video_screen.dart';
@@ -60,9 +62,7 @@ class Constants {
 
     const VideoScreen(),
 
-    const Center(
-      child: Text("view 4")
-    ),
+    ProfileScreen(userId: FirebaseAuth.instance.currentUser!.uid),
 
     const Center(
       child: Text("view 5")

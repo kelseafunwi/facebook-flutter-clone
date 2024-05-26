@@ -34,36 +34,38 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 5,
-      child: Scaffold(
-        backgroundColor: AppColors.grey,
-        appBar: AppBar(
-          backgroundColor: AppColors.realWhiteColor,
-          title: _buildFacebookText(),
-          elevation: 0,
-          actions: [
-            _buildMessengerWidget(),
-
-            GestureDetector(
-              onTap: () async {
-                _showDialog();
+    return SafeArea(
+      child: DefaultTabController(
+        length: 5,
+        child: Scaffold(
+          backgroundColor: AppColors.grey,
+          appBar: AppBar(
+            backgroundColor: AppColors.realWhiteColor,
+            title: _buildFacebookText(),
+            elevation: 0,
+            actions: [
+              _buildMessengerWidget(),
+      
+              GestureDetector(
+                onTap: () async {
+                  _showDialog();
+                },
+                child: _buildSearchWidget()
+              ),
+            ],
+            bottom: TabBar(
+              tabs: Constants.getHomeScreenTabs(_tabController.index),
+              controller: _tabController,
+              onTap: (index) {
+                setState(() { });
               },
-              child: _buildSearchWidget()
             ),
-          ],
-          bottom: TabBar(
-            tabs: Constants.getHomeScreenTabs(_tabController.index),
-            controller: _tabController,
-            onTap: (index) {
-              setState(() { });
-            },
           ),
+          body: TabBarView(
+            controller: _tabController,
+            children: Constants.screens,
+          )
         ),
-        body: TabBarView(
-          controller: _tabController,
-          children: Constants.screens,
-        )
       ),
     );
   }

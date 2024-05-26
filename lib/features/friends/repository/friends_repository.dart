@@ -16,7 +16,7 @@ class FriendsRepository {
 
     try {
 
-      // add my uid to the persons received request
+      // add my uid to the person's received request
       await _firestore.collection(FirebaseCollectionNames.users)
       .doc(userId).update({
         FirebaseFieldNames.receivedRequests: FieldValue.arrayUnion([_myUid])
@@ -36,6 +36,8 @@ class FriendsRepository {
   }
 
   // accepting the friend request.
+  // first it will mean the request was sent to me
+  // ie it is found in my received request.
   Future<String?> acceptFriendRequest({
     required String uid
   }) async {
@@ -61,21 +63,25 @@ class FriendsRepository {
     }
   }
 
+
   Future<String?> removeFriendRequest({
     required String userId
   }) async {
     try {
-      // remove the friend request.
+      // remove that request whether from the sentRequest or the receivedRequest for myself.
       await _firestore.collection(FirebaseCollectionNames.users)
       .doc(_myUid)
       .update({
-        FirebaseFieldNames.receivedRequests: FieldValue.arrayRemove([userId])
+        FirebaseFieldNames.receivedRequests: FieldValue.arrayRemove([userId]),
+        FirebaseFieldNames.sentRequests: FieldValue.arrayRemove([userId])
       });
 
+      // remove my id from the person sentRequest and receivedRequest
       await _firestore.collection(FirebaseCollectionNames.users)
         .doc(userId)
         .update({
-        FirebaseFieldNames.sentRequests: FieldValue.arrayRemove([userId])
+        FirebaseFieldNames.sentRequests: FieldValue.arrayRemove([userId]),
+        FirebaseFieldNames.receivedRequests: FieldValue.arrayRemove([userId]),
       });
 
       return null;
@@ -83,4 +89,44 @@ class FriendsRepository {
       return error.toString();
     }
   }
+
+  Future<String?> removeSentRequest({
+    required String uid // the uid of the person we are removing the friend request with
+  }) async {
+    try {
+      // remove the friend request from both sides
+      await removeFriendRequest(userId: uid);
+
+      return null;
+    } catch (error) {
+      return error.toString();
+    }
+  }
+
+  Future<String?>  removeFriend({
+    required String userId
+  }) async {
+    try {
+      // remove that user from my friend list
+      await _firestore.collection(FirebaseCollectionNames.users)
+          .doc(_myUid)
+          .update({
+        FirebaseFieldNames.friends: FieldValue.arrayRemove([userId]),
+      });
+
+      // remove me from their friend list.
+      await _firestore.collection(FirebaseCollectionNames.users)
+          .doc(userId)
+          .update({
+        FirebaseFieldNames.friends: FieldValue.arrayRemove([userId]),
+      });
+
+      return null;
+    } catch (error) {
+      return error.toString();
+    }
+  }
+
+
+
 }

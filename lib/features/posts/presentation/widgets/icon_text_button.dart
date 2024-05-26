@@ -19,12 +19,17 @@ class IconTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
-      child: Row(
-        children: [
-          FaIcon(icon, size: 20, color: color),
-          const SizedBox(width: 8),
-          Text(label),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
+        ),
+        child: Row(
+          children: [
+            FaIcon(icon, size: 20, color: color),
+            const SizedBox(width: 8),
+            Text(label),
+          ],
+        ),
       ),
     );
   }
