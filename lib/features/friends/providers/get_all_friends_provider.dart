@@ -10,7 +10,7 @@ import 'package:practice_flutter/features/auth/models/user.dart';
 // we will import ant use the StreamProvider method from riverpod
 // we will also trigger the auto dispose flag so that it should auto
 // delete when we are not using it.
-final getAllFriendsProvider = StreamProvider((ref) {
+final getAllFriendsProvider = StreamProvider.autoDispose((ref) {
   final __myUid = FirebaseAuth.instance.currentUser!.uid;
 
   // provide the type that our controller will iterate over
