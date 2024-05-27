@@ -7,6 +7,7 @@ import 'package:practice_flutter/core/screens/loader.dart';
 import 'package:practice_flutter/features/posts/presentation/widgets/make_post_widget.dart';
 import 'package:practice_flutter/features/posts/presentation/widgets/post_tile.dart';
 import 'package:practice_flutter/features/posts/providers/get_all_post_provider.dart';
+import 'package:practice_flutter/features/story/presentation/screens/stories_view.dart';
 
 class PostScreen extends StatelessWidget {
   const PostScreen({super.key});
@@ -18,6 +19,9 @@ class PostScreen extends StatelessWidget {
     return const CustomScrollView(
       slivers: [
         FeedMakePostWidget(),
+        
+        // story view
+        StoriesView(),
 
         PostList(),
       ],
