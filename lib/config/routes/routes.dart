@@ -9,6 +9,7 @@ import 'package:practice_flutter/features/friends/presentation/screens/friends_s
 import 'package:practice_flutter/features/posts/presentation/screens/comments_screen.dart';
 import 'package:practice_flutter/features/posts/presentation/screens/create_post_screen.dart';
 import 'package:practice_flutter/features/posts/presentation/screens/post_screen.dart';
+import 'package:practice_flutter/features/story/presentation/screens/create_story_screen.dart';
 import 'package:practice_flutter/widgets/splash_screen.dart';
 
 class Routes {
@@ -62,6 +63,12 @@ class Routes {
             userId: userId,
           ),
         );
+
+      case CreateStoryScreen.routeName:
+        return _cupertinoRoute(
+          const CreateStoryScreen()
+        );
+
 
       default:
         return _cupertinoRoute(

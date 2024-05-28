@@ -5,6 +5,7 @@ import 'package:practice_flutter/core/constants/app_colors.dart';
 import 'package:practice_flutter/features/auth/providers/auth_provider.dart';
 import 'package:practice_flutter/widgets/round_icon_button.dart';
 import 'package:practice_flutter/core/constants/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -20,10 +21,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
   late final TabController _tabController;
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
     // TabController uses the TickerProvider inside of its function initialization.
     _tabController = TabController(length: 5, vsync: this);
+
+    // initialize the shared preferences when the user opens the app
+    SharedPreferences preferences = await  SharedPreferences.getInstance();
+    preferences.setBool(Constants.darkThemeState, false);
   }
 
   @override

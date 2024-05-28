@@ -19,9 +19,21 @@ class PostScreen extends StatelessWidget {
     return const CustomScrollView(
       slivers: [
         FeedMakePostWidget(),
-        
+
+        SliverToBoxAdapter(
+          child: SizedBox(
+            height: 8,
+          ),
+        ),
+
         // story view
         StoriesView(),
+
+        SliverToBoxAdapter(
+          child: SizedBox(
+            height: 8,
+          ),
+        ),
 
         PostList(),
       ],
@@ -29,52 +41,43 @@ class PostScreen extends StatelessWidget {
   }
 }
 
-class PostList extends  ConsumerWidget {
+class PostList extends ConsumerWidget {
   const PostList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final posts = ref.watch(getAllPostProvider);
 
-    return posts.when(
-      data: (postsData) {
-        if (kDebugMode) {
-          print("Post Data $postsData");
-        }
-
-        return SliverList.separated(
-          itemCount: postsData.length,
-          itemBuilder: (context, int index) {
-
-            final post = postsData.elementAt(index);
-
-            return Row(
-              children: [
-            
-                Expanded(child: PostTile(post: post)),
-            
-              ],
-            );
-          },
-
-          separatorBuilder: (context, int index) {
-            return const SizedBox(
-              height: 10,
-            );
-          },
-        );
-      },
-      error: (error,stackTrace) {
-        return SliverToBoxAdapter(
-          child: ErrorScreen(error: error.toString()),
-        );
-      },
-      loading: () {
-        return const SliverToBoxAdapter(
-          child: Loader(),
-        );
+    return posts.when(data: (postsData) {
+      if (kDebugMode) {
+        print("Post Data $postsData");
       }
-    );
+
+      return SliverList.separated(
+        itemCount: postsData.length,
+        itemBuilder: (context, int index) {
+          final post = postsData.elementAt(index);
+
+          return Row(
+            children: [
+              Expanded(child: PostTile(post: post)),
+            ],
+          );
+        },
+        separatorBuilder: (context, int index) {
+          return const SizedBox(
+            height: 10,
+          );
+        },
+      );
+    }, error: (error, stackTrace) {
+      return SliverToBoxAdapter(
+        child: ErrorScreen(error: error.toString()),
+      );
+    }, loading: () {
+      return const SliverToBoxAdapter(
+        child: Loader(),
+      );
+    });
   }
 }

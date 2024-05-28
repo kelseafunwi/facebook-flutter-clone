@@ -40,7 +40,27 @@ class StoryRepository {
           views: const []);
 
       // doc and set is used to set particular fields in firebase to certain values.
-      await _firestore.collection(FirebaseCollectionNames.stories).doc(storyId).set(story.toMap());
+      await _firestore
+          .collection(FirebaseCollectionNames.stories)
+          .doc(storyId)
+          .set(story.toMap());
+
+      return null;
+    } catch (error) {
+      return error.toString();
+    }
+  }
+
+  // adding my uid to the list of the people who have viewed the story
+  Future<String?> viewStory({required String storyId}) async {
+    try {
+      //adding my uid to the list of people that have viewed that particular story.
+      await _firestore
+          .collection(FirebaseCollectionNames.stories)
+          .doc(storyId)
+          .update({
+        FirebaseFieldNames.views: FieldValue.arrayRemove([_myUid])
+      });
 
       return null;
     } catch (error) {

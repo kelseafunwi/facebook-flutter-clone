@@ -14,9 +14,13 @@ class StoryTile extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.cover,
+        child: SizedBox(
+          height: 100,
+          width: 120, // represents the width of each of the story tiles.
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

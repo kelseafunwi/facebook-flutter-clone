@@ -17,11 +17,14 @@ class StoriesView extends ConsumerWidget {
 
     return storyData.when(
       data: (stories) {
+
         return SliverToBoxAdapter(
           child: Container(
             height: 200,
             color: AppColors.realWhiteColor,
-            child: SliverList.builder(
+            //  we return the ListView.builder since this sis a container and not a CustomerScrollView
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
               itemCount: stories.length + 1,
               itemBuilder: (context, index) {
                 if (index == 0 ) {

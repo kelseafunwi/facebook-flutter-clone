@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practice_flutter/core/constants/constants.dart';
+import 'package:practice_flutter/features/story/presentation/screens/create_story_screen.dart';
 
 class AddStoryTile extends StatelessWidget {
   const AddStoryTile({super.key});
@@ -13,44 +14,49 @@ class AddStoryTile extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(50),
-        child: Container(
-          color: Colors.grey,
-          height: 180,
-          width: 100,
-          child: Stack(
-            children: [
-
-              SizedBox(
-                height: 120,
-                width: 120,
-                child: Image.network(
-                  Constants.profilePicBlank,
-                  fit: BoxFit.fitHeight,
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).pushNamed(CreateStoryScreen.routeName);
+          },
+          child: Container(
+            color: Colors.grey,
+            height: 180,
+            width: 100,
+            child: Stack(
+              children: [
+          
+                SizedBox(
+                  height: 120,
+                  width: 120,
+                  child: Image.network(
+                    Constants.profilePicBlank,
+                    fit: BoxFit.fitHeight,
+                  ),
                 ),
-              ),
-
-              const Positioned(
-                top: 100,
-                left: 10,
-                right: 10,
-                child: CircleAvatar(
-                  radius: 16,
-                  child: Icon(Icons.add),
-                )
-              ),
-
-              const Positioned(
+          
+                const Positioned(
                   top: 100,
                   left: 10,
                   right: 10,
-                  child: Column(
-                    children: [
-                      Text('Create'),
-                      Text('Story')
-                    ],
+                  child: CircleAvatar(
+                    radius: 16,
+                    child: Icon(Icons.add),
                   )
-              )
-            ],
+                ),
+          
+                const Positioned(
+                    top: 100,
+                    left: 10,
+                    right: 10,
+                    child: Column(
+                      children: [
+                        Text('Create'),
+                        Text('Story')
+                      ],
+                    )
+                )
+              ],
+            ),
           ),
         ),
       ),

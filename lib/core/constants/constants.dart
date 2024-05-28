@@ -12,6 +12,8 @@ class Constants {
     vertical: 10,
   );
 
+  static const darkThemeState = 'DarkThemeState';
+
   static const maleProfileUser = "https://jeremyveldman.com/wp-content/uploads/2019/08/Generic-Profile-Pic.jpg";
   static const profilePicBlank = "https://t3.ftcdn.net/jpg/05/16/27/58/240_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO45SsWv.jpg";
 

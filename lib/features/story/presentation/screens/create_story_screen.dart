@@ -11,12 +11,13 @@ import 'package:practice_flutter/widgets/round_button.dart';
 class CreateStoryScreen extends ConsumerStatefulWidget {
   const CreateStoryScreen({super.key});
 
+  static const routeName = '/create-story';
+
   @override
   ConsumerState<CreateStoryScreen> createState() => _CreateStoryScreenState();
 }
 
 class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen> {
-
   Future<File?>? imageFuture;
 
   @override
@@ -36,7 +37,6 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen> {
           return const Loader();
         }
 
-
         if (snapshot.data != null) {
           return Scaffold(
             body: Stack(
@@ -48,24 +48,30 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen> {
                     bottom: 100,
                     left: 50,
                     right: 50,
-                    child: isLoading ? const CircularProgressIndicator() :  RoundButton(
-                      onPressed: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        await ref.read(storyProvider).postStory(image: snapshot.data!).then((value) {
-                          setState(() {
-                            isLoading = false;
-                          });
-                        }).onError((error, stackTrace) {
-                          setState(() {
-                            isLoading = false;
-                          });
-                        });
-                      },
-                      label: "Post Story",
-                    )
-                ),
+                    child: isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : RoundButton(
+                            onPressed: () async {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              await ref
+                                  .read(storyProvider)
+                                  .postStory(image: snapshot.data!)
+                                  .then((value) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                // when we are done adding the story, we are going to pop the current context
+                                Navigator.of(context).pop();
+                              }).onError((error, stackTrace) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              });
+                            },
+                            label: "Post Story",
+                          )),
               ],
             ),
           );
