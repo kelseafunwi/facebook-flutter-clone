@@ -6,8 +6,6 @@ import 'package:practice_flutter/core/constants/constants.dart';
 import 'package:practice_flutter/core/constants/extensions.dart';
 import 'package:practice_flutter/core/screens/error_screen.dart';
 import 'package:practice_flutter/core/screens/loader.dart';
-import 'package:practice_flutter/features/auth/providers/get_user_info_as_stream_provider.dart';
-import 'package:practice_flutter/features/auth/providers/get_user_info_by_id.dart';
 import 'package:practice_flutter/features/auth/providers/get_user_info_by_id_as_stream_provider.dart';
 import 'package:practice_flutter/features/friends/presentation/widgets/add_friend_button.dart';
 import 'package:practice_flutter/features/posts/presentation/widgets/icon_text_button.dart';

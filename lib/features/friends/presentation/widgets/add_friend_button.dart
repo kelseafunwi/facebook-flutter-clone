@@ -16,10 +16,12 @@ class AddFriendButton extends ConsumerStatefulWidget {
 }
 
 class _AddFriendButtonState extends ConsumerState<AddFriendButton> {
+
+  bool isLoading = false;
+
+
   @override
   Widget build(BuildContext context) {
-
-    bool isLoading = false;
 
     // can only add a user if they have sentRequest to me or received a request from me
     final myUid = FirebaseAuth.instance.currentUser!.uid;
@@ -64,8 +66,7 @@ class _AddFriendButtonState extends ConsumerState<AddFriendButton> {
 
           setState(() {
             isLoading = false;
-          });
-        },
+          });},
         label: requestSent ?
             "Cancel Request" :
             alreadyFriends ?

@@ -11,7 +11,7 @@ import 'package:practice_flutter/features/auth/models/user.dart';
 // we will also trigger the auto dispose flag so that it should auto
 // delete when we are not using it.
 final getAllFriendRequestsProvider = StreamProvider((ref) {
-  final __myUid = FirebaseAuth.instance.currentUser!.uid;
+  final myUid = FirebaseAuth.instance.currentUser!.uid;
 
   // provide the type that our controller will iterate over
   // when initiating the controller
@@ -21,7 +21,7 @@ final getAllFriendRequestsProvider = StreamProvider((ref) {
 
   // we will start by getting our user
   final sub = FirebaseFirestore.instance.collection(FirebaseCollectionNames.users)
-      .where(FirebaseFieldNames.uid, isEqualTo: __myUid)
+      .where(FirebaseFieldNames.uid, isEqualTo: myUid)
       .limit(1)
       .snapshots()
       .listen((snapshot) {

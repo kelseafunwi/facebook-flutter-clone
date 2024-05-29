@@ -16,16 +16,14 @@ class SplashScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(),
-      body: SafeArea(
-        child: Container(
-          child: const Center(
-            child: Text(
-              "Facebook App",
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-              ),
+      body: const SafeArea(
+        child: Center(
+          child: Text(
+            "Facebook App",
+            style: TextStyle(
+              color: Colors.blue,
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),
