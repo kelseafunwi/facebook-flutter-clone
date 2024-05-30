@@ -28,6 +28,20 @@ class FirebaseFieldNames {
   static const String videoUrl = 'video_url';
   static const String videoId = 'video_id';
 
+  // things related to the chat.
+  static const String members = 'members';
+  static const String chatroomId = 'chatroom_id';
+  static const String lastMessage  = 'last_message';
+  static const String lastMessageTs  = 'last_message_ts';
+  static const String message  = 'message';
+  static const String senderId  = 'sender_id';
+  static const String receiverId  = 'receiver_id';
+  static const String seen = 'seen';
+  static const String timestamp = 'timestamp';
+  static const String messageId = 'message_id';
+  static const String messageType = 'message_type';
+
+
   // this is a shortcut to calling the constructor of this function
   FirebaseFieldNames._();
 }
