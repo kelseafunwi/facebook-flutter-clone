@@ -62,7 +62,7 @@ dependencies:
   video_player: ^2.0.4
 
   #for displaying the stories
-  story_view: ^0.15.0
+  story_view: ^0.16.0
 
 
   # The following adds the Cupertino Icons font to your application.

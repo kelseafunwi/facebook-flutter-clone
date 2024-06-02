@@ -14,6 +14,7 @@ import 'package:uuid/uuid.dart';
 class ChatRepository {
   final _myUid = FirebaseAuth.instance.currentUser!.uid;
   final _storage = FirebaseStorage.instance;
+  final _firebase = FirebaseFirestore.instance;
 
   Future<String?> createChatroom({
     required String userId,
@@ -52,33 +53,31 @@ class ChatRepository {
     }
   }
 
-  Future<String?> sendMessage({required String message,
-    required String chatroomId,
-    required String receiverId}) async {
+  Future<String?> sendMessage(
+      {required String message,
+      required String chatroomId,
+      required String receiverId}) async {
     try {
       // generate the unique message id
       final messageId = const Uuid().v4();
       final now = DateTime.now();
 
       Message newMessage =
-      Message(
-          message,
-          messageId,
-          _myUid,
-          receiverId,
-          now,
-          false,
-          'text');
+          Message(message, messageId, _myUid, receiverId, now, false, 'text');
 
       DocumentReference myChatRef = FirebaseFirestore.instance
           .collection(FirebaseCollectionNames.chatrooms)
           .doc(chatroomId);
 
-      await myChatRef.collection(FirebaseCollectionNames.messages).doc(
-          messageId).set(newMessage.toMap());
+      await myChatRef
+          .collection(FirebaseCollectionNames.messages)
+          .doc(messageId)
+          .set(newMessage.toMap());
 
-      await myChatRef.collection(FirebaseCollectionNames.messages).doc(
-          messageId).set(newMessage.toMap());
+      await myChatRef
+          .collection(FirebaseCollectionNames.messages)
+          .doc(messageId)
+          .set(newMessage.toMap());
 
       await myChatRef.update({
         FirebaseFieldNames.lastMessage: message,
@@ -91,7 +90,8 @@ class ChatRepository {
     }
   }
 
-  Future<String?> sendFileMessage({required File file,
+  Future<String?> sendFileMessage({
+    required File file,
     required String chatroomId,
     required String receiverId,
     required String messageType,
@@ -109,25 +109,22 @@ class ChatRepository {
       TaskSnapshot snapshot = await ref.putFile(file);
       final downloadUrl = await snapshot.ref.getDownloadURL();
 
-      Message newMessage =
-      Message(
-          downloadUrl,
-          messageId,
-          _myUid,
-          receiverId,
-          now,
-          false,
-          messageType);
+      Message newMessage = Message(
+          downloadUrl, messageId, _myUid, receiverId, now, false, messageType);
 
       DocumentReference myChatRef = FirebaseFirestore.instance
           .collection(FirebaseCollectionNames.chatrooms)
           .doc(chatroomId);
 
-      await myChatRef.collection(FirebaseCollectionNames.messages).doc(
-          messageId).set(newMessage.toMap());
+      await myChatRef
+          .collection(FirebaseCollectionNames.messages)
+          .doc(messageId)
+          .set(newMessage.toMap());
 
-      await myChatRef.collection(FirebaseCollectionNames.messages).doc(
-          messageId).set(newMessage.toMap());
+      await myChatRef
+          .collection(FirebaseCollectionNames.messages)
+          .doc(messageId)
+          .set(newMessage.toMap());
 
       await myChatRef.update({
         FirebaseFieldNames.lastMessage: "sent an $messageType",
@@ -140,18 +137,40 @@ class ChatRepository {
     }
   }
 
-
   Future<String?> seenMessages(
       {required String chatroomId, required String messageId}) async {
     try {
-      await FirebaseFirestore.instance.collection(
-          FirebaseCollectionNames.chatrooms).doc(chatroomId).collection(
-          FirebaseCollectionNames.messages).doc(messageId).update({FirebaseFieldNames.seen: true});
+      await FirebaseFirestore.instance
+          .collection(FirebaseCollectionNames.chatrooms)
+          .doc(chatroomId)
+          .collection(FirebaseCollectionNames.messages)
+          .doc(messageId)
+          .update({FirebaseFieldNames.seen: true});
 
       return null;
     } catch (error) {
       return error.toString();
     }
   }
+
+  Future<String?> deleteMessage(
+      {required String chatroomId, required String messageId}) async {
+    try {
+      await _firebase
+          .collection(FirebaseCollectionNames.chatrooms)
+          .doc(chatroomId)
+          .collection(FirebaseCollectionNames.messages)
+          .doc(messageId)
+          .delete();
+
+      return null;
+    } catch (error) {
+      return error.toString();
+    }
+  }
+
+
+
+
 
 }
